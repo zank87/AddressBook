@@ -15,11 +15,4 @@ public class Contact implements Serializable {
     public String contactStreet;
     public String contactCityStZip;
 
-    public Contact(String contactName, String contactPhone, String contactEmail, String contactStreet, String contactCityStZip) {
-        this.contactName = contactName;
-        this.contactPhone = contactPhone;
-        this.contactEmail = contactEmail;
-        this.contactStreet = contactStreet;
-        this.contactCityStZip = contactCityStZip;
-    }
 }

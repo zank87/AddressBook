@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:weightSum="1">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="#ff7abcff"
+    android:paddingLeft="64dp"
+    android:paddingRight="32dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp">
+
 
     <TextView
-        android:id="@+id/contactFName"
-        android:text="@string/fName_item_contact"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:id="@+id/fName_item_contact"
+        android:layout_centerVertical="true"
+        android:textColor="#ffffffff"
+        android:textSize="20sp"
+        android:paddingLeft="10dp"
+        tools:text="John Doe"/>
+
+</RelativeLayout>

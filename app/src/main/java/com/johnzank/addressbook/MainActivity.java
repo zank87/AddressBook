@@ -29,9 +29,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
-    private ArrayList<Contact> contactList = new ArrayList<>();
+    private ArrayList<String> contactList = new ArrayList<>();
     private String mFilename = "contacts.json";
-    public static final String EXTRA_CONTACT_OBJ = "default";
+    public static final String EXTRA_CONTACT_OBJ = "EXTRA_CONTACT_OBJ";
     public static final String TAG = MainActivity.class.getSimpleName();
 
 
@@ -76,15 +76,14 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "RETURNED");
-        ContactAdapter mContactAdapter = new ContactAdapter(this, contactList);
         if (data == null)
             return;
-
         // ADD created contact to contactList
         Log.d(TAG,"RETURNED SUCCESSFULLY");
         Intent i = getIntent();
         Contact contact = (Contact)i.getSerializableExtra(EXTRA_CONTACT_OBJ);
-        contactList.add(contact);
+        contactList.add(contact.contactName);
+        ArrayAdapter<String> mContactAdapter = new ArrayAdapter<>(this, R.layout.item_contact, contactList);
         mContactAdapter.notifyDataSetChanged();
         ListView listView = (ListView) findViewById(R.id.contactListView);
         listView.setAdapter(mContactAdapter);
@@ -94,7 +93,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ContactAdapter mContactAdapter = new ContactAdapter(this, contactList);
+        ArrayAdapter<String> mContactAdapter = new ArrayAdapter<String>(this, R.layout.item_contact, contactList);
         ListView listView = (ListView) findViewById(R.id.contactListView);
         listView.setAdapter(mContactAdapter);
 
@@ -115,11 +114,16 @@ public class MainActivity extends Activity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        ContactAdapter mContactAdapter = new ContactAdapter(this, contactList);
+        ArrayAdapter<String> mContactAdapter = new ArrayAdapter<String>(this, R.layout.item_contact, contactList);
         int position = info.position;
         switch (item.getItemId()) {
             case R.id.menu_item_delete:
                 contactList.remove(position);
+                mContactAdapter.notifyDataSetChanged();
+                return true;
+            case R.id.menu_item_edit:
+                // Create function to edit contact
+
                 mContactAdapter.notifyDataSetChanged();
                 return true;
         }

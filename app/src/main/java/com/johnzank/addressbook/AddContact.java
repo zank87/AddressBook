@@ -26,7 +26,6 @@ public class AddContact extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
-        Intent intent = getIntent();
 
         final EditText mName = (EditText) findViewById(R.id.nameEditText);
         final EditText mPhone = (EditText) findViewById(R.id.phoneEditText);
@@ -38,6 +37,7 @@ public class AddContact extends Activity {
         addContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG,"PRESSED ADD CONTACT");
                 Contact contact = new Contact(
                         mName.getText().toString(),
                         mPhone.getText().toString(),
@@ -45,7 +45,6 @@ public class AddContact extends Activity {
                         mStreet.getText().toString(),
                         mCityStZip.getText().toString());
                 contactAdded(contact);
-                Log.d(TAG,"PRESSED ADD CONTACT");
             }
         });
     }

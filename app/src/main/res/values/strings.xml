@@ -15,4 +15,5 @@
     <string name="addContact_button">Save Contact</string>
     <string name="delete_contextMenu">Delete</string>
     <string name="fName_item_contact">First Name</string>
+    <string name="edit_contextMenu">Edit</string>
 </resources>
