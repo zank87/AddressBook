@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Address Book</string>
+
+    <string name="add_contact">Add Contact</string>
+    <string name="title_activity_add_contact">Add Contact</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="name_contact">Name</string>
+    <string name="phone_contact">Phone</string>
+    <string name="email_contact">E-Mail</string>
+    <string name="address_contact">Address</string>
+    <string name="street_contact">Street</string>
+    <string name="cityStZip_contact">City/State/Zip</string>
+    <string name="addContact_button">Save Contact</string>
+    <string name="delete_contextMenu">Delete</string>
+    <string name="fName_item_contact">First Name</string>
+</resources>

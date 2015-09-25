@@ -1,0 +1,89 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                tools:context="com.johnzank.addressbook.AddContact">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:fillViewport="false">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/nameEditText"
+                android:hint="@string/name_contact"
+                android:layout_marginTop="@dimen/contactList_vert"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:ems="10"
+                android:id="@+id/phoneEditText"
+                android:hint="@string/phone_contact"
+                android:layout_marginTop="@dimen/contactList_vert"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/emailEditText"
+                android:hint="@string/email_contact"
+                android:layout_marginTop="@dimen/contactList_vert"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address_contact"
+                android:id="@+id/addressTextView"
+                android:paddingTop="@dimen/activity_address_vert_padding"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingLeft="@dimen/activity_address_horizontal_padding"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPostalAddress"
+                android:ems="10"
+                android:id="@+id/streetEditText"
+                android:layout_gravity="center_horizontal"
+                android:hint="@string/street_contact"
+                android:layout_marginTop="@dimen/contactList_vert"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPostalAddress"
+                android:ems="10"
+                android:id="@+id/cityStZipEditText"
+                android:hint="@string/cityStZip_contact"
+                android:layout_marginTop="@dimen/contactList_vert"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addContact_button"
+                android:id="@+id/addContactButton"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/contact_vert"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
