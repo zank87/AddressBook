@@ -29,6 +29,7 @@ public class AddContact extends Activity {
         final EditText mEmail = (EditText) findViewById(R.id.emailEditText);
         final EditText mStreet = (EditText) findViewById(R.id.streetEditText);
         final EditText mCityStZip = (EditText) findViewById(R.id.cityStZipEditText);
+        final String mPosition;
         if(contactInfo != null) {
             String[] contactBuilder = contactInfo.getStringArray(EXTRA_CONTACT_OBJ);
             mName.setText(contactBuilder[0]);
@@ -36,6 +37,7 @@ public class AddContact extends Activity {
             mEmail.setText(contactBuilder[2]);
             mStreet.setText(contactBuilder[3]);
             mCityStZip.setText(contactBuilder[4]);
+            mPosition = contactBuilder[5];
         }
 
         Button addContact = (Button) findViewById(R.id.addContactButton);
@@ -47,17 +49,16 @@ public class AddContact extends Activity {
                         mPhone.getText().toString(),
                         mEmail.getText().toString(),
                         mStreet.getText().toString(),
-                        mCityStZip.getText().toString()};
+                        mCityStZip.getText().toString(),
+                        null};
                 if(contactInfo != null) {
                     String[] contactBuilder = contactInfo.getStringArray(EXTRA_CONTACT_OBJ);
-                    String mPosition = contactBuilder[5];
-                    String[] contact = new String{
-                            mName.getText().toString(),
-                            mPhone.getText().toString(),
-                            mEmail.getText().toString(),
-                            mStreet.getText().toString(),
-                            mCityStZip.getText().toString(),
-                            mPosition};
+                    contact[0] = mName.getText().toString();
+                    contact[1] = mPhone.getText().toString();
+                    contact[2] = mEmail.getText().toString();
+                    contact[3] = mStreet.getText().toString();
+                    contact[4] = mCityStZip.getText().toString();
+                    contact[5] = contactBuilder[5];
                 }
                 Log.d(TAG, "PRESSED ADD CONTACT");
                 Log.d(TAG, contact[0]);

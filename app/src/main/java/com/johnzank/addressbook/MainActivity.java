@@ -86,8 +86,14 @@ public class MainActivity extends Activity {
         Bundle contactInfo = data.getExtras();
         String[] contactBuilder = contactInfo.getStringArray(EXTRA_CONTACT_OBJ);
         Log.d(TAG, Arrays.toString(contactBuilder));
-        contacts.add(new Contact(contactBuilder[0], contactBuilder[1], contactBuilder[2], contactBuilder[3], contactBuilder[4]));
-        contactNamesList.add(contactBuilder[0]);
+        if(contactBuilder[5] != null) {
+            Contact contact = new Contact(contactBuilder[0], contactBuilder[1], contactBuilder[2], contactBuilder[3], contactBuilder[4]);
+            contacts.set(Integer.parseInt(contactBuilder[5]), contact);
+            contactNamesList.set(Integer.parseInt(contactBuilder[5]), contactBuilder[0]);
+        } else {
+            contacts.add(new Contact(contactBuilder[0], contactBuilder[1], contactBuilder[2], contactBuilder[3], contactBuilder[4]));
+            contactNamesList.add(contactBuilder[0]);
+        }
         ListView listView = (ListView) findViewById(R.id.contactListView);
         listView.setAdapter(contactAdapter);
         contactAdapter.notifyDataSetChanged();
