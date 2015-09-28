@@ -1,4 +1,4 @@
-package com.johnzank.addressbook;
+/*package com.johnzank.addressbook;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,8 +12,9 @@ import java.util.ArrayList;
 /**
  * Created by johnzank on 9/23/15.
  */
-public class ContactAdapter extends ArrayAdapter<Contact> {
-    public ContactAdapter(Context context, ArrayList<Contact> contacts) {
+
+/*public class ArrayAdapter extends android.widget.ArrayAdapter<Contact> {
+    public ArrayAdapter(Context context, ArrayList<Contact> contacts) {
         super(context, 0, contacts);
     }
 
@@ -31,3 +32,4 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         return convertView;
     }
 }
+*/

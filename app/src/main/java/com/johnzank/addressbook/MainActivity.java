@@ -9,15 +9,12 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
+import android.widget.ArrayAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONTokener;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,17 +23,21 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainActivity extends Activity {
 
-    private ArrayList<Contact> contactList = new ArrayList<>();
+    private ArrayList<Contact> contacts = new ArrayList<>();
+    private ArrayList<String> contactNamesList = new ArrayList<>();
+    private ArrayAdapter<String> contactAdapter;
     private String mFilename = "contacts.json";
     public static final String EXTRA_CONTACT_OBJ = "default";
     public static final String TAG = MainActivity.class.getSimpleName();
 
 
+    // Write the names of contacts into JSON file
     private void saveContactList() {
-        JSONArray array = new JSONArray(contactList);
+        JSONArray array = new JSONArray(contactNamesList);
         Writer writer;
         try {
             OutputStream out = openFileOutput(mFilename, Context.MODE_PRIVATE);
@@ -48,6 +49,7 @@ public class MainActivity extends Activity {
         }
     }
 
+    // Read names of contacts from JSON file
     private void readContactList() {
         BufferedReader reader;
         try {
@@ -76,28 +78,29 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "RETURNED");
-        ContactAdapter mContactAdapter = new ContactAdapter(this, contactList);
         if (data == null)
             return;
 
-        // ADD created contact to contactList
+        // ADD created contact to contactNamesList
         Log.d(TAG,"RETURNED SUCCESSFULLY");
-        Intent i = getIntent();
-        Contact contact = (Contact)i.getSerializableExtra(EXTRA_CONTACT_OBJ);
-        contactList.add(contact);
-        mContactAdapter.notifyDataSetChanged();
+        Bundle contactInfo = data.getExtras();
+        String[] contactBuilder = contactInfo.getStringArray(EXTRA_CONTACT_OBJ);
+        Log.d(TAG, Arrays.toString(contactBuilder));
+        contacts.add(new Contact(contactBuilder[0], contactBuilder[1], contactBuilder[2], contactBuilder[3], contactBuilder[4]));
+        contactNamesList.add(contactBuilder[0]);
         ListView listView = (ListView) findViewById(R.id.contactListView);
-        listView.setAdapter(mContactAdapter);
+        listView.setAdapter(contactAdapter);
+        contactAdapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ContactAdapter mContactAdapter = new ContactAdapter(this, contactList);
+        contactAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, contactNamesList);
         ListView listView = (ListView) findViewById(R.id.contactListView);
-        listView.setAdapter(mContactAdapter);
-
+        listView.setAdapter(contactAdapter);
+        registerForContextMenu(listView);
         readContactList();
     }
 
@@ -108,22 +111,35 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        getMenuInflater().inflate(R.menu.contact_list, menu);
-    }
-
-    @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        ContactAdapter mContactAdapter = new ContactAdapter(this, contactList);
         int position = info.position;
         switch (item.getItemId()) {
             case R.id.menu_item_delete:
-                contactList.remove(position);
-                mContactAdapter.notifyDataSetChanged();
+                contactNamesList.remove(position);
+                contacts.remove(position);
+                contactAdapter.notifyDataSetChanged();
                 return true;
+            case R.id.menu_item_edit:
+                Intent i = new Intent(MainActivity.this, AddContact.class);
+                Bundle contactInfo = new Bundle();
+                String[] tempContact = {
+                        contacts.get(position).contactName,
+                        contacts.get(position).contactPhone,
+                        contacts.get(position).contactEmail,
+                        contacts.get(position).contactStreet,
+                        contacts.get(position).contactCityStZip,
+                        position+ ""};
+                contactInfo.putStringArray(EXTRA_CONTACT_OBJ, tempContact);
+                i.putExtras(contactInfo);
+                startActivityForResult(i, 1);
         }
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        getMenuInflater().inflate(R.menu.contact_list, menu);
     }
 
     @Override

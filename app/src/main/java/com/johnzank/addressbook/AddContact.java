@@ -15,37 +15,59 @@ public class AddContact extends Activity {
     public static final String EXTRA_CONTACT_OBJ = "default";
     public static final String TAG = AddContact.class.getSimpleName();
 
-    private void contactAdded(Contact contact) {
-        Intent data = new Intent(this, MainActivity.class);
-        data.putExtra(EXTRA_CONTACT_OBJ, contact);
-        setResult(RESULT_OK, data);
-        Log.d(TAG, "SET RESULT");
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final Intent data = getIntent();
+        final Bundle contactInfo = data.getExtras();
+
         setContentView(R.layout.activity_add_contact);
-        Intent intent = getIntent();
 
         final EditText mName = (EditText) findViewById(R.id.nameEditText);
         final EditText mPhone = (EditText) findViewById(R.id.phoneEditText);
         final EditText mEmail = (EditText) findViewById(R.id.emailEditText);
         final EditText mStreet = (EditText) findViewById(R.id.streetEditText);
         final EditText mCityStZip = (EditText) findViewById(R.id.cityStZipEditText);
+        if(contactInfo != null) {
+            String[] contactBuilder = contactInfo.getStringArray(EXTRA_CONTACT_OBJ);
+            mName.setText(contactBuilder[0]);
+            mPhone.setText(contactBuilder[1]);
+            mEmail.setText(contactBuilder[2]);
+            mStreet.setText(contactBuilder[3]);
+            mCityStZip.setText(contactBuilder[4]);
+        }
 
         Button addContact = (Button) findViewById(R.id.addContactButton);
         addContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Contact contact = new Contact(
+                String[] contact = {
                         mName.getText().toString(),
                         mPhone.getText().toString(),
                         mEmail.getText().toString(),
                         mStreet.getText().toString(),
-                        mCityStZip.getText().toString());
-                contactAdded(contact);
-                Log.d(TAG,"PRESSED ADD CONTACT");
+                        mCityStZip.getText().toString()};
+                if(contactInfo != null) {
+                    String[] contactBuilder = contactInfo.getStringArray(EXTRA_CONTACT_OBJ);
+                    String mPosition = contactBuilder[5];
+                    String[] contact = new String{
+                            mName.getText().toString(),
+                            mPhone.getText().toString(),
+                            mEmail.getText().toString(),
+                            mStreet.getText().toString(),
+                            mCityStZip.getText().toString(),
+                            mPosition};
+                }
+                Log.d(TAG, "PRESSED ADD CONTACT");
+                Log.d(TAG, contact[0]);
+
+                Bundle contactInfo = new Bundle();
+                contactInfo.putStringArray(EXTRA_CONTACT_OBJ, contact);
+                data.putExtras(contactInfo);
+                setResult(RESULT_OK, data);
+                Log.d(TAG, "SET RESULT");
+                finish();
             }
         });
     }

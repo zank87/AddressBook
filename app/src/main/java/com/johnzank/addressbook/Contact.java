@@ -2,6 +2,7 @@ package com.johnzank.addressbook;
 
 import java.io.Serializable;
 
+
 /**
  * Created by johnzank on 9/23/15.
  */
